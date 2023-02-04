@@ -1,0 +1,68 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Portfolio{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Portfolio</h1>
+    <div class="table-responsive">
+        <table class="table table-sm">
+            <form method="POST">
+                <tbody>
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">portfolio #1</th>
+                            <th scope="col">portfolio #2</th>
+                        </tr>
+                    </thead>
+
+
+                    {% for i in range(1,4) %}
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">有価証券 #{{i}}</label>
+                        </th>
+                        {% for j in range(0,2) %}
+                        <td>
+                            <label>
+                                {{session["brand_jp"][2*(i-1)+j]}}
+                            </label>
+                            &nbsp;&nbsp;&nbsp;
+                            <label>
+                                {{session["p"][2*(i-1)+j]}}
+                            </label>
+                            <label>
+                                %
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </form>
+        </table>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <center>
+        <h3>チャート</h3>
+        <iframe src="/fig/1" width="800" height="500"></iframe>
+        <h3>年利</h3>
+        <iframe src="/fig/2" width="800" height="500"></iframe>
+        <h3>投資年数と年利</h3>
+        <iframe src="/fig/3" width="800" height="500"></iframe>
+        <h3>投資年数とトータルリターン</h3>
+        <iframe src="/fig/4" width="800" height="500"></iframe>
+    </center>
+</div>
+
+<center>
+    </br>
+    <button class="btn btn-primary" onclick="history.back(-1)">戻る</button>
+    </br></br>
+</center>
+{% endblock %}

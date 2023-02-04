@@ -1,0 +1,158 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}FIRE後のシミュレーション{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1>FIRE後のシミュレーション</h1>
+    <div class="table-responsive">
+        <table class="table table-sm">
+            <form method="POST">
+
+                <tbody>
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">portfolio #1</th>
+                            <th scope="col">portfolio #2</th>
+                        </tr>
+                    </thead>
+
+                    {% for i in range(1,4) %}
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">有価証券 #{{i}}</label>
+                        </th>
+                        {% for j in range(0,2) %}
+                        <td>
+                            <label>
+                                {{session["brand_jp"][2*(i-1)+j]}}
+                            </label>
+                            &nbsp;&nbsp;&nbsp;
+                            <label>
+                                {{session["p"][2*(i-1)+j]}}
+                            </label>
+                            <label>
+                                %
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">初期資産</label>
+                        </th>
+                        <td colspan="2">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">　有価証券</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                {{session["value0_a"]}}
+                            </label>
+                            <label>
+                                万円&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">　現金</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                {{session["cash0_a"]}}
+                            </label>
+                            <label>
+                                万円
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">取り崩し方法</label>
+                        </th>
+                        {% for i in range(0,2) %}
+                        <td>
+                            <label>
+                                {{session["method_jp"][i]}}
+                            </label>
+                            <label>
+                                {{session["r"][i]}}
+                            </label>
+                            <label>
+                                %
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">年間収支</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                {{session["outgo"]}}
+                            </label>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </form>
+        </table>
+    </div>
+</div>
+
+<div class="container">
+    <center>
+        <h3>成功率</h3>
+        <iframe src="/fig/1" width="800" height="500"></iframe>
+        <h3>資産増減</h3>
+        <iframe src="/fig/2" width="800" height="500"></iframe>
+        <h3>portfolio #1:資産増減パターン</h3>
+        <iframe src="/fig/3" width="800" height="500"></iframe>
+        <h3>portfolio #1:最高のケース</h3>
+        <iframe src="/fig/4" width="800" height="500"></iframe>
+        <h3>portfolio #1:中間のケース</h3>
+        <iframe src="/fig/5" width="800" height="500"></iframe>
+        <h3>portfolio #1:最悪のケース</h3>
+        <iframe src="/fig/6" width="800" height="500"></iframe>
+        <!-- <h3>トータルリターン</h3>
+        <iframe src="/fig/4" width="800" height="500"></iframe> -->
+        <!-- <h3>投資シミュレーション:Case1</h3>
+    <iframe src="/fig/5" width="800" height="500"></iframe>
+    <h3>投資シミュレーション:Case2</h3>
+    <iframe src="/fig/6" width="800" height="500"></iframe> -->
+        <!-- <h3>資産増減</h3>
+        <iframe src="/fig/7" width="800" height="500"></iframe>
+        <h3>資産増減パターン:portfolio #1</h3>
+        <iframe src="/fig/9" width="800" height="500"></iframe>
+        <h3>資産増減パターン:portfolio #2</h3>
+        <iframe src="/fig/10" width="800" height="500"></iframe>
+        <h3>取り崩し成功率</h3>
+        <iframe src="/fig/8" width="800" height="500"></iframe> -->
+        <!-- <h3>資産取り崩し失敗パターン:Case1</h3>
+    <iframe src="/fig/11" width="800" height="500"></iframe>
+    <h3>資産取り崩し失敗パターン:Case2</h3>
+    <iframe src="/fig/12" width="800" height="500"></iframe> -->
+        <!-- <h3>資産取り崩しシミュレーション:Case1</h3>
+    <iframe src="/fig/13" width="800" height="500"></iframe>
+    <h3>資産取り崩しシミュレーション:Case2</h3>
+    <iframe src="/fig/14" width="800" height="500"></iframe> -->
+    </center>
+</div>
+
+<center>
+    </br>
+    <button class="btn btn-primary" onclick="history.back(-1)">戻る</button>
+    </br></br>
+</center>
+{% endblock %}

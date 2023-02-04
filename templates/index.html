@@ -1,0 +1,344 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}FIRE Visualizer{% endblock %}
+
+{% block content %}
+<!-- <div class="container">
+    {% for post in posts %}
+    <article>
+        <h2>{{post.brand1_case1}}</h2>
+
+    </article>
+    {% endfor %}
+</div> -->
+
+<!-- [FC2 Analyzer] //analyzer.fc2.com/  -->
+<script language="javascript" src="//analyzer54.fc2.com/ana/processor.php?uid=2897827" type="text/javascript"></script>
+<noscript>
+    <div align="right"><img src="//analyzer54.fc2.com/ana/icon.php?uid=2897827&ref=&href=&wid=0&hei=0&col=0" /></div>
+</noscript>
+<!-- [FC2 Analyzer]  -->
+
+<div class="container">
+    <h1>FIRE Visualizer</h1>
+    <div class="table-responsive">
+        <table class="table table-sm">
+            <form method="POST">
+
+                <tbody>
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">portfolio #1</th>
+                            <th scope="col">portfolio #2</th>
+                        </tr>
+                    </thead>
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">有価証券 #1</label>
+                        </th>
+                        {% for j in range(0,2) %}
+                        <td>
+                            <label>
+                                <select name="brand" class="form-control input-sm">
+                                    <option value="^DJI">ダウ平均株価</option>
+                                    <option value="^SPX">S&P 500</option>
+                                    <option value="^NDQ">NASDAQ</option>
+                                    <option value="10USYB">米10年債</option>
+                                </select>
+                            </label>
+                            <label>
+                                <input type="number" name="p" value="100" min="0" max="100" step="1"
+                                    class="form-control input-sm">
+                            </label>
+                            <label>
+                                %
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+
+                    {% for i in range(2,4) %}
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">有価証券 #{{i}}</label>
+                        </th>
+                        {% for j in range(0,2) %}
+                        <td>
+                            <label>
+                                <select name="brand" class="form-control input-sm">
+                                    <option value="^DJI">ダウ平均株価</option>
+                                    <option value="^SPX">S&P 500</option>
+                                    <option value="^NDQ">NASDAQ</option>
+                                    <option value="10USYB">米10年債</option>
+                                </select>
+                            </label>
+                            <label>
+                                <input type="number" name="p" value="0" min="0" max="100" step="1"
+                                    class="form-control input-sm">
+                            </label>
+                            <label>
+                                %
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+
+                    <!-- <tr>
+                        <th scope="row" class="bg-primary">
+                            <label class="control-label" for="status">FIRE Simulation</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                <input type="radio" name="sim" value="YES">する&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="sim" value="NO" checked>しない
+                            </label>
+                        </td>
+                    </tr> -->
+
+                    <tr>
+                        <th scope="row" class="bg-primary">
+                            <label>
+                                <input type="radio" name="sim" value="before">
+                            </label>
+                            <label class="control-label" for="status">FIREまでのシミュレーション</label>
+                        </th>
+                        <td colspan="2" class="bg-primary">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">目標資産</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                <input type="number" name="goal" value="8000" step="100" class="form-control input-sm">
+                            </label>
+                            <label>
+                                万円
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">初期資産</label>
+                        </th>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">　有価証券</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                <input type="number" name="value0_b" value="5000" step="100"
+                                    class="form-control input-sm">
+                            </label>
+                            <label>
+                                万円&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">　現金</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                <input type="number" name="cash0_b" value="1000" step="100"
+                                    class="form-control input-sm">
+                            </label>
+                            <label>
+                                万円
+                            </label>
+                        </td>
+                    </tr>
+
+
+
+
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">有価証券積立</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                <input type="number" name="saving" value="120" step="10" class="form-control input-sm">
+                            </label>
+                            <label>
+                                万円／年&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">年間収支</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                <a href="/income" role="button">入力</a>
+                            </label>
+                        </td>
+                    </tr>
+
+
+
+                    <!-- <tr>
+                        <th scope="row">
+                            &nbsp;&nbsp;&nbsp;<label class="control-label" for="status">投資期間</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                <input type="number" name="start_sim_invest" value="1920" min="1920" max="2022" step="1"
+                                    class="form-control input-sm">
+                            </label>
+                            <label>
+                                年～
+                            </label>
+                            <label>
+                                <input type="number" name="end_sim_invest" value="1980" min="1920" max="2022" step="1"
+                                    class="form-control input-sm">
+                            </label>
+                            <label>
+                                年
+                            </label>
+                        </td>
+                    </tr> -->
+
+                    <tr>
+                        <th scope="row" class="bg-primary">
+                            <label>
+                                <input type="radio" name="sim" value="after">
+                            </label>
+                            <label class="control-label" for="status">FIRE後のシミュレーション</label>
+                        </th>
+                        <td colspan="2" class="bg-primary">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">初期資産</label>
+                        </th>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">　有価証券</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                <input type="number" name="value0_a" value="5000" step="100"
+                                    class="form-control input-sm">
+                            </label>
+                            <label>
+                                万円&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">　現金</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                <input type="number" name="cash0_a" value="1000" step="100"
+                                    class="form-control input-sm">
+                            </label>
+                            <label>
+                                万円&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">取り崩し方法</label>
+                        </th>
+                        {% for i in range(0,2) %}
+                        <td>
+                            <label>
+                                <select name="method" class="form-control input-sm">
+                                    <option value="0">定率</option>
+                                    <option value="1">定額</option>
+                                </select>
+                            </label>
+                            <label>
+                                <input type="number" name="r" value="4" min="0.1" max="10" step="0.1"
+                                    class="form-control input-sm">
+                            </label>
+                            <label>
+                                %
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+
+                    <!-- <tr>
+                        <th scope="row">
+                            &nbsp;&nbsp;&nbsp;
+                            <label class="control-label" for="status">取り崩し期間</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                <input type="number" name="start_sim_dissaving" value="1920" min="1920" max="2022"
+                                    step="1" class="form-control input-sm">
+                            </label>
+                            <label>
+                                年～
+                            </label>
+                        </td>
+                    </tr> -->
+
+
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">年間収支</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                <a href="/outgo" role="button">入力</a>
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="text-center submit">
+                            <input type="submit" value="入力" class="btn btn-primary">
+                        </td>
+                    </tr>
+
+                </tbody>
+            </form>
+        </table>
+    </div>
+</div>
+<div class="container">
+    使い方：portfolio #1,#2にシミュレーションに使用するポートフォリオを入力してください。#1と#2で比較できるようになっています。
+    入力ボタンを押すとportfolio #1,#2のチャートやリターンのグラフを表示します。
+    「FIREまでのシミュレーション」のラジオボタンを選択するとFIRE達成までのシミュレーションを行います。
+    年間収支に年間の収支を入力します。標準で100万円（収入）となっています。
+    「FIRE後「のシミュレーション」のラジオボタンを選択するとFIREを実施した場合のシミュレーションを行います。
+    年間収支に年間の収支を入力します。標準で100万円（支出）となっています。
+    シミュレーションでは過去のデータでテストして最高、中央、最悪のケースを表示します。
+</div>
+
+<div class="container">
+    <h1>参考</h1>
+    <label>
+        <a href="/reference" role="button">参考データ</a>
+    </label>
+</div>
+{% endblock %}

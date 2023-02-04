@@ -1,0 +1,144 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}FIREまでのシミュレーション{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1>FIREまでのシミュレーション</h1>
+    <div class="table-responsive">
+        <table class="table table-sm">
+            <form method="POST">
+
+                <tbody>
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">portfolio #1</th>
+                            <th scope="col">portfolio #2</th>
+                        </tr>
+                    </thead>
+
+                    {% for i in range(1,4) %}
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">有価証券 #{{i}}</label>
+                        </th>
+                        {% for j in range(0,2) %}
+                        <td>
+                            <label>
+                                {{session["brand_jp"][2*(i-1)+j]}}
+                            </label>
+                            &nbsp;&nbsp;&nbsp;
+                            <label>
+                                {{session["p"][2*(i-1)+j]}}
+                            </label>
+                            <label>
+                                %
+                            </label>
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">目標資産</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                {{session["goal"]}}
+                            </label>
+                            <label>
+                                万円
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">初期資産</label>
+                        </th>
+                        <td colspan="2">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">　有価証券</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                {{session["value0_b"]}}
+                            </label>
+                            <label>
+                                万円
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">　現金</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                {{session["cash0_b"]}}
+                            </label>
+                            <label>
+                                万円
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">有価証券積立</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                {{session["saving"]}}
+                            </label>
+                            <label>
+                                万円／年&nbsp;&nbsp;&nbsp;
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">
+                            <label class="control-label" for="status">年間収支</label>
+                        </th>
+                        <td colspan="2">
+                            <label>
+                                {{session["income"]}}
+                            </label>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </form>
+        </table>
+    </div>
+</div>
+
+<div class="container">
+    <center>
+        <h3>成功率</h3>
+        <iframe src="/fig/21" width="800" height="500"></iframe>
+        <h3>資産増減</h3>
+        <iframe src="/fig/22" width="800" height="500"></iframe>
+        <h3>portfolio #1:資産増減パターン</h3>
+        <iframe src="/fig/23" width="800" height="500"></iframe>
+        <h3>portfolio #1:最高のケース</h3>
+        <iframe src="/fig/24" width="800" height="500"></iframe>
+        <h3>portfolio #1:中間のケース</h3>
+        <iframe src="/fig/25" width="800" height="500"></iframe>
+        <h3>portfolio #1:最悪のケース</h3>
+        <iframe src="/fig/26" width="800" height="500"></iframe>
+    </center>
+</div>
+
+<center>
+    </br>
+    <button class="btn btn-primary" onclick="history.back(-1)">戻る</button>
+    </br></br>
+</center>
+{% endblock %}

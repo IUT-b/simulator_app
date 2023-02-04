@@ -1,0 +1,22 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Portfolio{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <center>
+        <h3>ダウ平均株価とGDP</h3>
+        <iframe src="/fig/101" width="800" height="500"></iframe>
+        <h3>S&P 500とGDP</h3>
+        <iframe src="/fig/102" width="800" height="500"></iframe>
+        <h3>NASDAQとGDP</h3>
+        <iframe src="/fig/103" width="800" height="500"></iframe>
+    </center>
+</div>
+
+<center>
+    </br>
+    <button class="btn btn-primary" onclick="history.back(-1)">戻る</button>
+    </br></br>
+</center>
+{% endblock %}
