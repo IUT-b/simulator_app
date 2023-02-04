@@ -15,8 +15,6 @@
                             <th scope="col">portfolio #2</th>
                         </tr>
                     </thead>
-
-
                     {% for i in range(1,4) %}
                     <tr>
                         <th scope="row">
@@ -38,25 +36,22 @@
                         {% endfor %}
                     </tr>
                     {% endfor %}
-
                 </tbody>
             </form>
         </table>
     </div>
 </div>
 
-
-
 <div class="container">
     <center>
         <h3>チャート</h3>
-        <iframe src="/fig/1" width="800" height="500"></iframe>
+        <iframe src="{{url_for('fig',i=1)}}" width="800" height="500"></iframe>
         <h3>年利</h3>
-        <iframe src="/fig/2" width="800" height="500"></iframe>
+        <iframe src="{{url_for('fig',i=2)}}" width="800" height="500"></iframe>
         <h3>投資年数と年利</h3>
-        <iframe src="/fig/3" width="800" height="500"></iframe>
+        <iframe src="{{url_for('fig',i=3)}}" width="800" height="500"></iframe>
         <h3>投資年数とトータルリターン</h3>
-        <iframe src="/fig/4" width="800" height="500"></iframe>
+        <iframe src="{{url_for('fig',i=4)}}" width="800" height="500"></iframe>
     </center>
 </div>
 

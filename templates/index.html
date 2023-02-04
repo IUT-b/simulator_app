@@ -23,7 +23,6 @@
     <div class="table-responsive">
         <table class="table table-sm">
             <form method="POST">
-
                 <tbody>
                     <thead>
                         <tr>
@@ -32,7 +31,6 @@
                             <th scope="col">portfolio #2</th>
                         </tr>
                     </thead>
-
                     <tr>
                         <th scope="row">
                             <label class="control-label" for="status">有価証券 #1</label>
@@ -57,7 +55,6 @@
                         </td>
                         {% endfor %}
                     </tr>
-
                     {% for i in range(2,4) %}
                     <tr>
                         <th scope="row">
@@ -84,19 +81,6 @@
                         {% endfor %}
                     </tr>
                     {% endfor %}
-
-                    <!-- <tr>
-                        <th scope="row" class="bg-primary">
-                            <label class="control-label" for="status">FIRE Simulation</label>
-                        </th>
-                        <td colspan="2">
-                            <label>
-                                <input type="radio" name="sim" value="YES">する&nbsp;&nbsp;&nbsp;
-                                <input type="radio" name="sim" value="NO" checked>しない
-                            </label>
-                        </td>
-                    </tr> -->
-
                     <tr>
                         <th scope="row" class="bg-primary">
                             <label>
@@ -107,7 +91,6 @@
                         <td colspan="2" class="bg-primary">
                         </td>
                     </tr>
-
                     <tr>
                         <th scope="row">
                             <label class="control-label" for="status">目標資産</label>
@@ -121,7 +104,6 @@
                             </label>
                         </td>
                     </tr>
-
                     <tr>
                         <th scope="row">
                             <label class="control-label" for="status">初期資産</label>
@@ -131,7 +113,6 @@
                         <td>
                         </td>
                     </tr>
-
                     <tr>
                         <th scope="row">
                             <label class="control-label" for="status">　有価証券</label>
@@ -160,11 +141,6 @@
                             </label>
                         </td>
                     </tr>
-
-
-
-
-
                     <tr>
                         <th scope="row">
                             <label class="control-label" for="status">有価証券積立</label>
@@ -178,42 +154,16 @@
                             </label>
                         </td>
                     </tr>
-
                     <tr>
                         <th scope="row">
                             <label class="control-label" for="status">年間収支</label>
                         </th>
                         <td colspan="2">
                             <label>
-                                <a href="/income" role="button">入力</a>
+                                <a href="{{url_for('income')}}" role="button">入力</a>
                             </label>
                         </td>
                     </tr>
-
-
-
-                    <!-- <tr>
-                        <th scope="row">
-                            &nbsp;&nbsp;&nbsp;<label class="control-label" for="status">投資期間</label>
-                        </th>
-                        <td colspan="2">
-                            <label>
-                                <input type="number" name="start_sim_invest" value="1920" min="1920" max="2022" step="1"
-                                    class="form-control input-sm">
-                            </label>
-                            <label>
-                                年～
-                            </label>
-                            <label>
-                                <input type="number" name="end_sim_invest" value="1980" min="1920" max="2022" step="1"
-                                    class="form-control input-sm">
-                            </label>
-                            <label>
-                                年
-                            </label>
-                        </td>
-                    </tr> -->
-
                     <tr>
                         <th scope="row" class="bg-primary">
                             <label>
@@ -224,7 +174,6 @@
                         <td colspan="2" class="bg-primary">
                         </td>
                     </tr>
-
                     <tr>
                         <th scope="row">
                             <label class="control-label" for="status">初期資産</label>
@@ -284,42 +233,21 @@
                         </td>
                         {% endfor %}
                     </tr>
-
-                    <!-- <tr>
-                        <th scope="row">
-                            &nbsp;&nbsp;&nbsp;
-                            <label class="control-label" for="status">取り崩し期間</label>
-                        </th>
-                        <td colspan="2">
-                            <label>
-                                <input type="number" name="start_sim_dissaving" value="1920" min="1920" max="2022"
-                                    step="1" class="form-control input-sm">
-                            </label>
-                            <label>
-                                年～
-                            </label>
-                        </td>
-                    </tr> -->
-
-
-
                     <tr>
                         <th scope="row">
                             <label class="control-label" for="status">年間収支</label>
                         </th>
                         <td colspan="2">
                             <label>
-                                <a href="/outgo" role="button">入力</a>
+                                <a href="{{url_for('outgo')}}" role="button">入力</a>
                             </label>
                         </td>
                     </tr>
-
                     <tr>
                         <td colspan="3" class="text-center submit">
                             <input type="submit" value="入力" class="btn btn-primary">
                         </td>
                     </tr>
-
                 </tbody>
             </form>
         </table>
@@ -338,7 +266,7 @@
 <div class="container">
     <h1>参考</h1>
     <label>
-        <a href="/reference" role="button">参考データ</a>
+        <a href="{{url_for('reference')}}" role="button">参考データ</a>
     </label>
 </div>
 {% endblock %}

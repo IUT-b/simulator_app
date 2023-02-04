@@ -1,44 +1,18 @@
-from flask import Flask, redirect, render_template, request, session
+import datetime as dt
+
+from flask import Flask, redirect, render_template, request, session, url_for
 from flask_bootstrap import Bootstrap
-from flask_sqlalchemy import SQLAlchemy
+
+import analysis as an
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///situation.db"
-db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
 
 app.secret_key = "9KStWezC"
 
 
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    brand1_case1 = db.Column(db.String(50), nullable=False)
-    brand2_case1 = db.Column(db.String(50), nullable=False)
-    brand3_case1 = db.Column(db.String(50), nullable=False)
-    brand1_case2 = db.Column(db.String(50), nullable=False)
-    brand2_case2 = db.Column(db.String(50), nullable=False)
-    brand3_case2 = db.Column(db.String(50), nullable=False)
-    p1_case1 = db.Column(db.String(50), nullable=False)
-    p2_case1 = db.Column(db.String(50), nullable=False)
-    p3_case1 = db.Column(db.String(50), nullable=False)
-    p1_case2 = db.Column(db.String(50), nullable=False)
-    p2_case2 = db.Column(db.String(50), nullable=False)
-    p3_case2 = db.Column(db.String(50), nullable=False)
-    start_sim_invest = db.Column(db.String(50), nullable=False)
-    end_sim_invest = db.Column(db.String(50), nullable=False)
-    start_sim_dissaving = db.Column(db.String(50), nullable=False)
-    method_case1 = db.Column(db.String(50), nullable=False)
-    method_case2 = db.Column(db.String(50), nullable=False)
-    r_case1 = db.Column(db.String(50), nullable=False)
-    r_case2 = db.Column(db.String(50), nullable=False)
-
-
 @app.route("/", methods=["GET", "POST"])
 def index():
-    # if request.method=='GET':
-    #     posts=Post.query.all()
-    #     return render_template('index.html',posts=posts)
-
     if request.method == "GET":
         if "outgo" in session:
             outgo = session["outgo"]
@@ -47,9 +21,6 @@ def index():
     if request.method == "POST":
         brand = request.form.getlist("brand")
         p = request.form.getlist("p")
-        # start_sim_invest = request.form.get("start_sim_invest")
-        # end_sim_invest = request.form.get("end_sim_invest")
-        # start_sim_dissaving = request.form.get("start_sim_dissaving")
         sim = request.form.get("sim")
         value0_b = request.form.get("value0_b")
         cash0_b = request.form.get("cash0_b")
@@ -69,9 +40,6 @@ def index():
 
         session["brand"] = brand
         session["p"] = p
-        # session['start_sim_invest']=start_sim_invest
-        # session['end_sim_invest']=end_sim_invest
-        # session['start_sim_dissaving']=start_sim_dissaving
         session["sim"] = sim
         session["value0_b"] = value0_b
         session["cash0_b"] = cash0_b
@@ -82,14 +50,6 @@ def index():
         session["cash0_a"] = cash0_a
         session["method"] = method
         session["r"] = r
-
-        import datetime as dt
-
-        import analysis as an
-
-        # start_sim_invest=dt.date(year=int(start_sim_invest),month=1,day=1)
-        # end_sim_invest=dt.date(year=int(end_sim_invest),month=1,day=1)
-        # start_sim_dissaving=dt.date(year=int(start_sim_dissaving),month=1,day=1)
 
         start = dt.date(year=1920, month=1, day=1)
         end = dt.datetime.now().date()
@@ -144,13 +104,6 @@ def index():
 
             success_goal1 = an.sim_dissaving_dash(df_goal1_all.copy())
             success_goal2 = an.sim_dissaving_dash(df_goal2_all.copy())
-
-            # fig=an.fig_sim_goal(df_goal2[0].copy())
-            # fig.write_html("templates/fig24.html")
-            # fig=an.fig_sim_goal(df_goal2[1].copy())
-            # fig.write_html("templates/fig25.html")
-            # fig=an.fig_sim_goal(df_goal2[2].copy())
-            # fig.write_html("templates/fig26.html")
 
             fig = an.fig_fire_success_dash(success_goal1.copy(), success_goal2.copy())
             fig.write_html("templates/fig21.html")
@@ -218,7 +171,7 @@ def index():
 
             page = "simulation2"
 
-        return redirect(f"/{page}")
+        return redirect(url_for(f"{page}"))
 
 
 @app.route("/fig/<i>", methods=["GET", "POST"])
@@ -298,7 +251,7 @@ def income():
     if request.method == "POST":
         income = request.form.getlist("income")
         session["income"] = income
-        return redirect("/")
+        return redirect(url_for("index"))
     else:
         return render_template("income.html")
 
@@ -308,7 +261,7 @@ def outgo():
     if request.method == "POST":
         outgo = request.form.getlist("outgo")
         session["outgo"] = outgo
-        return redirect("/")
+        return redirect(url_for("index"))
     else:
         return render_template("outgo.html")
 

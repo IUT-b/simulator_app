@@ -2,13 +2,11 @@
 {% block title %}FIRE後のシミュレーション{% endblock %}
 
 {% block content %}
-
 <div class="container">
     <h1>FIRE後のシミュレーション</h1>
     <div class="table-responsive">
         <table class="table table-sm">
             <form method="POST">
-
                 <tbody>
                     <thead>
                         <tr>
@@ -17,7 +15,6 @@
                             <th scope="col">portfolio #2</th>
                         </tr>
                     </thead>
-
                     {% for i in range(1,4) %}
                     <tr>
                         <th scope="row">
@@ -39,7 +36,6 @@
                         {% endfor %}
                     </tr>
                     {% endfor %}
-
                     <tr>
                         <th scope="row">
                             <label class="control-label" for="status">初期資産</label>
@@ -73,7 +69,6 @@
                             </label>
                         </td>
                     </tr>
-
                     <tr>
                         <th scope="row">
                             <label class="control-label" for="status">取り崩し方法</label>
@@ -92,8 +87,6 @@
                         </td>
                         {% endfor %}
                     </tr>
-
-
                     <tr>
                         <th scope="row">
                             <label class="control-label" for="status">年間収支</label>
@@ -104,7 +97,6 @@
                             </label>
                         </td>
                     </tr>
-
                 </tbody>
             </form>
         </table>
@@ -114,39 +106,17 @@
 <div class="container">
     <center>
         <h3>成功率</h3>
-        <iframe src="/fig/1" width="800" height="500"></iframe>
+        <iframe src="{{url_for('fig',i=1)}}" width="800" height="500"></iframe>
         <h3>資産増減</h3>
-        <iframe src="/fig/2" width="800" height="500"></iframe>
+        <iframe src="{{url_for('fig',i=2)}}" width="800" height="500"></iframe>
         <h3>portfolio #1:資産増減パターン</h3>
-        <iframe src="/fig/3" width="800" height="500"></iframe>
+        <iframe src="{{url_for('fig',i=3)}}" width="800" height="500"></iframe>
         <h3>portfolio #1:最高のケース</h3>
-        <iframe src="/fig/4" width="800" height="500"></iframe>
+        <iframe src="{{url_for('fig',i=4)}}" width="800" height="500"></iframe>
         <h3>portfolio #1:中間のケース</h3>
-        <iframe src="/fig/5" width="800" height="500"></iframe>
+        <iframe src="{{url_for('fig',i=5)}}" width="800" height="500"></iframe>
         <h3>portfolio #1:最悪のケース</h3>
-        <iframe src="/fig/6" width="800" height="500"></iframe>
-        <!-- <h3>トータルリターン</h3>
-        <iframe src="/fig/4" width="800" height="500"></iframe> -->
-        <!-- <h3>投資シミュレーション:Case1</h3>
-    <iframe src="/fig/5" width="800" height="500"></iframe>
-    <h3>投資シミュレーション:Case2</h3>
-    <iframe src="/fig/6" width="800" height="500"></iframe> -->
-        <!-- <h3>資産増減</h3>
-        <iframe src="/fig/7" width="800" height="500"></iframe>
-        <h3>資産増減パターン:portfolio #1</h3>
-        <iframe src="/fig/9" width="800" height="500"></iframe>
-        <h3>資産増減パターン:portfolio #2</h3>
-        <iframe src="/fig/10" width="800" height="500"></iframe>
-        <h3>取り崩し成功率</h3>
-        <iframe src="/fig/8" width="800" height="500"></iframe> -->
-        <!-- <h3>資産取り崩し失敗パターン:Case1</h3>
-    <iframe src="/fig/11" width="800" height="500"></iframe>
-    <h3>資産取り崩し失敗パターン:Case2</h3>
-    <iframe src="/fig/12" width="800" height="500"></iframe> -->
-        <!-- <h3>資産取り崩しシミュレーション:Case1</h3>
-    <iframe src="/fig/13" width="800" height="500"></iframe>
-    <h3>資産取り崩しシミュレーション:Case2</h3>
-    <iframe src="/fig/14" width="800" height="500"></iframe> -->
+        <iframe src="{{url_for('fig',i=6)}}" width="800" height="500"></iframe>
     </center>
 </div>
 

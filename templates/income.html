@@ -8,7 +8,6 @@
         <table class="table table-sm">
             <form>
                 <tbody>
-
                     <tr>
                         <th scope="row">
                             <label class="control-label" for="status">収入</label>
@@ -23,7 +22,6 @@
                             </label>
                         </td>
                     </tr>
-
                     <tr>
                         <th scope="row">
                             <label class="control-label" for="status">支出</label>
@@ -43,7 +41,6 @@
                             <button id="button" class="btn btn-light">一括設定</button>
                         </td>
                     </tr>
-
                 </tbody>
             </form>
         </table>
@@ -69,12 +66,6 @@
     });
 </script>
 
-
-
-
-
-
-
 <div class="container">
     <div class="table-responsive">
         <table class="table table-sm">
@@ -93,7 +84,6 @@
                         </th>
                         <td>
                             <label>
-                                <!-- <input type="number" name="income" value="100" step="10" class="form-control input-sm"> -->
                                 <input type="number" name="income" value="100" step="10" class="form-control input-sm"
                                     id="resultForm{{i}}">
                             </label>
@@ -103,64 +93,14 @@
                         </td>
                     </tr>
                     {% endfor %}
-
                     <tr>
                         <td colspan="2" class="text-center submit">
                             <input type="submit" value="設定完了" class="btn btn-primary">
                         </td>
                     </tr>
-
                 </tbody>
             </form>
         </table>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-<div class="container">
-    <div class="table-responsive">
-        <table class="table-sm">
-            <form method="POST">
-                <tbody>
-
-                    {% for i in range(1,31) %}
-                    <tr>
-                        <th scope="row">
-                            <label class="control-label" for="status">{{i}}年目</label>
-                        </th>
-                        <td>
-                            <label> -->
-                                <!-- <input type="number" name="income" value="100" step="10" class="form-control input-sm"> -->
-                                <!-- <input type="number" name="income" value="100" step="10" class="form-control input-sm"
-                                    id="resultForm{{i}}">
-                            </label>
-                            <label>
-                                万円
-                            </label>
-                        </td>
-                    </tr>
-                    {% endfor %}
-
-                    <tr>
-                        <td colspan="2" class="text-center submit">
-                            <input type="submit" value="入力" class="btn btn-primary">
-                        </td>
-                    </tr>
-
-                </tbody>
-            </form>
-        </table>
-    </div>
-</div> -->
-
 {% endblock %}
