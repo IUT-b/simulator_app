@@ -1,11 +1,12 @@
 import datetime as dt
 
 from flask import Flask, redirect, render_template, request, session, url_for
+from flask_bootstrap import Bootstrap
 
 import analysis as an
 
 app = Flask(__name__)
-
+bootstrap = Bootstrap(app)
 app.secret_key = "9KStWezC"
 
 

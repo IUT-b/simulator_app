@@ -1,4 +1,9 @@
-{% extends "./base.html" %}
+{% extends "bootstrap/base.html" %}
+{% block metas %}
+{{super()}}
+<meta name="description" content="FIRE達成前後の資産運用をシミュレーションできます。">
+<meta name="keywords" content="FIRE,ファイア,早期退職,シミュレーション,シミュレーター,資産運用,インデックス投資,Webアプリ">
+{% endblock %}
 {% block title %}FIRE Visualizer{% endblock %}
 
 {% block content %}
@@ -244,14 +249,121 @@
         </table>
     </div>
 </div>
+
 <div class="container">
-    使い方：portfolio #1,#2にシミュレーションに使用するポートフォリオを入力してください。#1と#2で比較できるようになっています。
-    入力ボタンを押すとportfolio #1,#2のチャートやリターンのグラフを表示します。
-    「FIREまでのシミュレーション」のラジオボタンを選択するとFIRE達成までのシミュレーションを行います。
-    年間収支に年間の収支を入力します。標準で100万円（収入）となっています。
-    「FIRE後「のシミュレーション」のラジオボタンを選択するとFIREを実施した場合のシミュレーションを行います。
-    年間収支に年間の収支を入力します。標準で100万円（支出）となっています。
-    シミュレーションでは過去のデータでテストして最高、中央、最悪のケースを表示します。
+    <h1>使い方</h1>
+    <h4>ポートフォリオの過去のデータをみる</h4>
+    <ol class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">STEP 1</div>
+                <p>ポートフォリオを入力します</p>
+                <p>
+                    <font color="gray">２つまで入力して比較することができます</font>
+                </p>
+            </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">STEP 2</div>
+                </p>入力ボタンを押します</p>
+            </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">STEP 3</div>
+                </p>ポートフォリオの過去のチャート、年利、リターンのグラフを表示します</p>
+            </div>
+        </li>
+    </ol>
+    <h4>FIREまでのシミュレーションをする</h4>
+    <ol class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">STEP 1</div>
+                <p>シミュレーションするポートフォリオを入力します</p>
+                <p>
+                    <font color="gray">２つまで入力して比較することができます</font>
+                </p>
+            </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">STEP 2</div>
+                <p>目標資産、初期資産、積立金額、年間収支を入力します</p>
+                <p>
+                    <font color="gray">年間収支は１００万円のプラスで初期設定されています</font>
+                </p>
+            </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">STEP 3</div>
+                <p>FIREまでのシミュレーションのボタンをチェックします</p>
+            </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">STEP 4</div>
+                <p>入力ボタンを押します</p>
+            </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">STEP 5</div>
+                <p>FIREの成功率と資産増減のグラフを表示します</p>
+                <p>
+                    <font color="gray">過去の株価データでバックテストします</font>
+                    <br>
+                    <font color="gray">最高、中間、最悪のケースを表示します</font>
+                </p>
+            </div>
+        </li>
+    </ol>
+    <h4>FIRE後のシミュレーションをする</h4>
+    <ol class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">STEP 1</div>
+                <p>シミュレーションするポートフォリオを入力します</p>
+                <p>
+                    <font color="gray">２つまで入力して比較することができます</font>
+                </p>
+            </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">STEP 2</div>
+                <p>FIRE開始時の資産、取り崩し方法、年間収支を入力します</p>
+                <p>
+                    <font color="gray">年間収支は１００万円のマイナスで初期設定されています</font>
+                </p>
+            </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">STEP 3</div>
+                <p>FIRE後のシミュレーションのボタンをチェックします</p>
+            </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">STEP 4</div>
+                <p>入力ボタンを押します</p>
+            </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">STEP 5</div>
+                <p>FIREの成功率と資産増減のグラフを表示します</p>
+                <p>
+                    <font color="gray">過去の株価データでバックテストします</font>
+                    <br>
+                    <font color="gray">最高、中間、最悪のケースを表示します</font>
+                </p>
+            </div>
+        </li>
+    </ol>
 </div>
 
 <div class="container">
