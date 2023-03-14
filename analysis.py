@@ -8,10 +8,13 @@ from dateutil import relativedelta
 from pandas_datareader import data
 from plotly.subplots import make_subplots
 
+from app import app
+
 
 # 株価データ取得処理
 def stock(brand, start, end):
-    df = pd.read_csv(f"stock_data/{brand}.csv", index_col=0)
+    # df = pd.read_csv(f"stock_data/{brand}.csv", index_col=0)
+    df = pd.read_csv(app.config["DATA_FOLDER"] + f"{brand}.csv", index_col=0)
     df.index = pd.to_datetime(df.index)
 
     date1 = df.tail(1).index[0] + relativedelta.relativedelta(months=1)
@@ -28,7 +31,8 @@ def stock(brand, start, end):
         df2 = df2.groupby([df2["Date"].dt.year, df2["Date"].dt.month]).head(1)
         df2.set_index("Date", inplace=True)
         df = pd.concat([df, df2])
-        df.to_csv(f"stock_data/{brand}.csv")
+        # df.to_csv(f"stock_data/{brand}.csv")
+        df.to_csv(app.config["DATA_FOLDER"] + f"{brand}.csv")
 
     df = df[start:end]
     return df

@@ -3,11 +3,11 @@ import datetime as dt
 from flask import Flask, redirect, render_template, request, session, url_for
 from flask_bootstrap import Bootstrap
 
-import analysis as an
-
 app = Flask(__name__)
+app.config.from_object("config.LocalConfig")
 bootstrap = Bootstrap(app)
-app.secret_key = "9KStWezC"
+
+import analysis as an
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -70,13 +70,13 @@ def index():
         interest_case2 = an.interest(df_case2.copy(), periods)
 
         fig = an.fig_chart(df_case1.copy(), df_case2.copy())
-        fig.write_html("templates/fig1.html")
+        fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig1.html")
         fig = an.fig_interest(interest_case1, interest_case2)
-        fig.write_html("templates/fig2.html")
+        fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig2.html")
         fig = an.fig_interest_dispersion(periods, interest_case1, interest_case2)
-        fig.write_html("templates/fig3.html")
+        fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig3.html")
         fig = an.fig_total_interest_dispersion(periods, interest_case1, interest_case2)
-        fig.write_html("templates/fig4.html")
+        fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig4.html")
         page = "portfolio"
 
         # FIREまでのシミュレーションあり
@@ -105,17 +105,17 @@ def index():
             success_goal2 = an.sim_dissaving_dash(df_goal2_all.copy())
 
             fig = an.fig_fire_success_dash(success_goal1.copy(), success_goal2.copy())
-            fig.write_html("templates/fig21.html")
+            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig21.html")
             fig = an.fig_sim_dispersion_dash(df_goal1_all.copy(), df_goal2_all.copy())
-            fig.write_html("templates/fig22.html")
+            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig22.html")
             fig = an.fig_sim_dash(*df_goal1_all.copy())
-            fig.write_html("templates/fig23.html")
+            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig23.html")
             fig = an.fig_sim_goal(df_goal1[0].copy())
-            fig.write_html("templates/fig24.html")
+            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig24.html")
             fig = an.fig_sim_goal(df_goal1[1].copy())
-            fig.write_html("templates/fig25.html")
+            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig25.html")
             fig = an.fig_sim_goal(df_goal1[2].copy())
-            fig.write_html("templates/fig26.html")
+            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig26.html")
 
             page = "simulation1"
 
@@ -156,17 +156,17 @@ def index():
             success_fire2 = an.sim_dissaving_dash2(df_fire2_all.copy())
 
             fig = an.fig_fire_success_dash(success_fire1.copy(), success_fire2.copy())
-            fig.write_html("templates/fig1.html")
+            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig1.html")
             fig = an.fig_sim_dispersion_dash(df_fire1_all.copy(), df_fire2_all.copy())
-            fig.write_html("templates/fig2.html")
+            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig2.html")
             fig = an.fig_sim_dash(*df_fire1_all.copy())
-            fig.write_html("templates/fig3.html")
+            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig3.html")
             fig = an.fig_sim_fire(df_fire1[0].copy())
-            fig.write_html("templates/fig4.html")
+            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig4.html")
             fig = an.fig_sim_fire(df_fire1[1].copy())
-            fig.write_html("templates/fig5.html")
+            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig5.html")
             fig = an.fig_sim_fire(df_fire1[2].copy())
-            fig.write_html("templates/fig6.html")
+            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig6.html")
 
             page = "simulation2"
 
@@ -286,10 +286,10 @@ def reference():
     df_gdp = an.stock("GDP", start, end)
 
     fig = an.fig_gdp(df1.copy(), df_gdp.copy())
-    fig.write_html("templates/fig101.html")
+    fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig101.html")
     fig = an.fig_gdp(df2.copy(), df_gdp.copy())
-    fig.write_html("templates/fig102.html")
+    fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig102.html")
     fig = an.fig_gdp(df3.copy(), df_gdp.copy())
-    fig.write_html("templates/fig103.html")
+    fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig103.html")
 
     return render_template("reference.html")
