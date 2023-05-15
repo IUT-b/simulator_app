@@ -1,4 +1,7 @@
 import datetime as dt
+import os
+import shutil
+import tempfile
 
 from flask import Flask, redirect, render_template, request, session, url_for
 from flask_bootstrap import Bootstrap
@@ -7,11 +10,11 @@ app = Flask(__name__)
 app.config.from_object("config.LocalConfig")
 bootstrap = Bootstrap(app)
 
-import analysis as an
-
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    import analysis as an
+
     if request.method == "GET":
         if "outgo" in session:
             outgo = session["outgo"]
@@ -69,14 +72,19 @@ def index():
         df_case2 = an.portfolio(lst_case2, start, end)
         interest_case2 = an.interest(df_case2.copy(), periods)
 
+        # 作業用の一時ディレクトリ作成（apache上で新規html作成必要、書き換え不可）
+        tmpdir = tempfile.mkdtemp(dir=app.config["TEMPLATES_FOLDER"])
+        session["tmpdir"] = tmpdir
+        session["tmpdir_name"] = os.path.basename(os.path.dirname(tmpdir + "/"))
+
         fig = an.fig_chart(df_case1.copy(), df_case2.copy())
-        fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig1.html")
+        fig.write_html(tmpdir + "/fig1.html")
         fig = an.fig_interest(interest_case1, interest_case2)
-        fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig2.html")
+        fig.write_html(tmpdir + "/fig2.html")
         fig = an.fig_interest_dispersion(periods, interest_case1, interest_case2)
-        fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig3.html")
+        fig.write_html(tmpdir + "/fig3.html")
         fig = an.fig_total_interest_dispersion(periods, interest_case1, interest_case2)
-        fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig4.html")
+        fig.write_html(tmpdir + "/fig4.html")
         page = "portfolio"
 
         # FIREまでのシミュレーションあり
@@ -105,33 +113,29 @@ def index():
             success_goal2 = an.sim_dissaving_dash(df_goal2_all.copy())
 
             fig = an.fig_fire_success_dash(success_goal1.copy(), success_goal2.copy())
-            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig21.html")
+            fig.write_html(tmpdir + "/fig21.html")
             fig = an.fig_sim_dispersion_dash(df_goal1_all.copy(), df_goal2_all.copy())
-            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig22.html")
+            fig.write_html(tmpdir + "/fig22.html")
             fig = an.fig_sim_dash(*df_goal1_all.copy())
-            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig23.html")
+            fig.write_html(tmpdir + "/fig23.html")
             fig = an.fig_sim_goal(df_goal1[0].copy())
-            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig24.html")
+            fig.write_html(tmpdir + "/fig24.html")
             fig = an.fig_sim_goal(df_goal1[1].copy())
-            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig25.html")
+            fig.write_html(tmpdir + "/fig25.html")
             fig = an.fig_sim_goal(df_goal1[2].copy())
-            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig26.html")
+            fig.write_html(tmpdir + "/fig26.html")
 
             page = "simulation1"
 
         # FIRE後のシミュレーションあり
         if sim == "after":
-            # sim_invest_case1=an.cal_sim_invest(df_case1.copy(),start_sim_invest,end_sim_invest)
             sim_dissaving_case1, success_dissaving_case1 = an.sim_dissaving(
                 df_case1.copy(), start, float(r[0]) / 100, int(method[0])
             )
-            # sim_dissaving_extract_case1=an.cal_sim_dissaving_extract(sim_dissaving_case1,start_sim_dissaving)
 
-            # sim_invest_case2=an.cal_sim_invest(df_case2.copy(),start_sim_invest,end_sim_invest)
             sim_dissaving_case2, success_dissaving_case2 = an.sim_dissaving(
                 df_case2.copy(), start, float(r[1]) / 100, int(method[1])
             )
-            # sim_dissaving_extract_case2=an.cal_sim_dissaving_extract(sim_dissaving_case2,start_sim_dissaving)
 
             for i in range(len(outgo)):
                 outgo[i] = int(outgo[i])
@@ -156,17 +160,17 @@ def index():
             success_fire2 = an.sim_dissaving_dash2(df_fire2_all.copy())
 
             fig = an.fig_fire_success_dash(success_fire1.copy(), success_fire2.copy())
-            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig1.html")
+            fig.write_html(tmpdir + "/fig1.html")
             fig = an.fig_sim_dispersion_dash(df_fire1_all.copy(), df_fire2_all.copy())
-            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig2.html")
+            fig.write_html(tmpdir + "/fig2.html")
             fig = an.fig_sim_dash(*df_fire1_all.copy())
-            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig3.html")
+            fig.write_html(tmpdir + "/fig3.html")
             fig = an.fig_sim_fire(df_fire1[0].copy())
-            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig4.html")
+            fig.write_html(tmpdir + "/fig4.html")
             fig = an.fig_sim_fire(df_fire1[1].copy())
-            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig5.html")
+            fig.write_html(tmpdir + "/fig5.html")
             fig = an.fig_sim_fire(df_fire1[2].copy())
-            fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig6.html")
+            fig.write_html(tmpdir + "/fig6.html")
 
             page = "simulation2"
 
@@ -175,10 +179,20 @@ def index():
 
 @app.route("/fig/<i>", methods=["GET", "POST"])
 def fig(i):
-    return render_template(f"fig{i}.html")
+    return render_template(session["tmpdir_name"] + f"/fig{i}.html")
+
+
+# def deco(func):
+#     def wrapper():
+#         func()
+#         tmpdir = session["tmpdir"]
+#         shutil.rmtree(tmpdir)
+
+#     return wrapper
 
 
 @app.route("/portfolio", methods=["GET"])
+# @deco
 def portfolio():
 
     if request.method == "GET":
@@ -195,7 +209,7 @@ def portfolio():
                 brand_jp[i] = "米10年債"
         session["brand_jp"] = brand_jp
 
-        return render_template("portfolio.html")
+        return render_template("/portfolio.html")
 
 
 @app.route("/simulation1", methods=["GET", "POST"])
@@ -286,10 +300,10 @@ def reference():
     df_gdp = an.stock("GDP", start, end)
 
     fig = an.fig_gdp(df1.copy(), df_gdp.copy())
-    fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig101.html")
+    fig.write_html(session["tmpdir"] + "/fig101.html")
     fig = an.fig_gdp(df2.copy(), df_gdp.copy())
-    fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig102.html")
+    fig.write_html(session["tmpdir"] + "/fig102.html")
     fig = an.fig_gdp(df3.copy(), df_gdp.copy())
-    fig.write_html(app.config["TEMPLATES_FOLDER"] + "fig103.html")
+    fig.write_html(session["tmpdir"] + "/fig103.html")
 
     return render_template("reference.html")
